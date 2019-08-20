@@ -22,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -46,11 +47,13 @@ class IndexController {
     private final SuperheroRepository repo;
 
     @GetMapping(value = "/")
+    @Transactional(readOnly = true)
     List<Superhero> index() {
         return repo.findByOrderByCreatedDesc();
     }
 
     @PostMapping(value = "/new")
+    @Transactional
     Superhero newInstance() {
         // Create a random superhero instance.
         final com.github.javafaker.Superhero randomHero = faker.superhero();
