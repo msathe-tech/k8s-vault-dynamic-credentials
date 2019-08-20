@@ -184,7 +184,7 @@ Configure database credentials generation:
 $ vault write database/roles/mydb-role \
       db_name=mydb \
       creation_statements="CREATE ROLE \"{{name}}\" WITH LOGIN PASSWORD '{{password}}' VALID UNTIL '{{expiration}}'; \
-          GRANT SELECT ON ALL TABLES IN SCHEMA public TO \"{{name}}\";" \
+          GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO \"{{name}}\";" \
       default_ttl="5m" \
       max_ttl="24h"
 Success! Data written to: database/roles/mydb-role
