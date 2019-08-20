@@ -328,6 +328,37 @@ $ curl -s 34.77.95.55 | jq -r
 ]
 ```
 
+As you scale out this app, you will notice that Vault will generate credentials for each
+app instance:
+```bash
+$ kubectl -n k8s-vault-dynamic-credentials scale --replicas 3 deployment app
+deployment.extensions/app scaled
+$ psql -U postgres -h localhost mydb
+Password for user postgres:
+psql (11.4, server 11.5)
+Type "help" for help.
+
+mydb=# SELECT rolname FROM pg_roles;
+                      rolname
+----------------------------------------------------
+ pg_monitor
+ pg_read_all_settings
+ pg_read_all_stats
+ pg_stat_scan_tables
+ pg_read_server_files
+ pg_write_server_files
+ pg_execute_server_program
+ pg_signal_backend
+ postgres
+ v-approle-mydb-rol-tifMqAud14Kl7SUGB2tF-1566314789
+ v-approle-mydb-rol-QJ0PAQ9vVv1WmE3rO4c2-1566336148
+ v-approle-mydb-rol-dfHFfRjVPD1KeIUcipFc-1566336155
+(13 rows)
+```
+
+In this example, each PostgreSQL role is used by an app instance to connect
+to the database instance. Each role has its own expiration period.
+
 ## Recap
 
 Using Vault, you can manage service credentials from a single point.
