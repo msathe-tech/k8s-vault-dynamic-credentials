@@ -1,0 +1,16 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, prometheus
+
+spring:
+  jpa:
+    generate-ddl: true
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            # Workaround for issue in PostgreSQL JDBC driver:
+            # https://github.com/pgjdbc/pgjdbc/issues/1102
+            non_contextual_creation: true

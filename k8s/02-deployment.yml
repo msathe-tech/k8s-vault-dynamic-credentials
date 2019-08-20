@@ -1,0 +1,50 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app
+  namespace: k8s-vault-dynamic-credentials
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      role: app
+  template:
+    metadata:
+      labels:
+        role: app
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: "/actuator/prometheus"
+        prometheus.io/port:  "8080"
+    spec:
+      containers:
+        - name: app
+          image: alexandreroman/k8s-vault-dynamic-credentials
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          livenessProbe:
+            httpGet:
+              port: 8080
+              path: /actuator/health
+            initialDelaySeconds: 60
+          readinessProbe:
+            httpGet:
+              port: 8080
+              path: /actuator/health
+            initialDelaySeconds: 15
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: kubernetes
+          volumeMounts:
+            - name: config-volume
+              mountPath: /workspace/bootstrap-kubernetes.yml
+              subPath: bootstrap-kubernetes.yml
+            - name: config-volume
+              mountPath: /workspace/application-kubernetes.yml
+              subPath: application-kubernetes.yml
+      volumes:
+        - name: config-volume
+          configMap:
+            name: app

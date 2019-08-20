@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: k8s-vault-dynamic-credentials
+  cloud:
+    vault:
+      # Disable Vault by default: you can run this app locally without having Vault.
+      enabled: false
+      fail-fast: true

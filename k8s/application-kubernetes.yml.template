@@ -1,0 +1,5 @@
+# Spring Boot configuration template when this app is deployed to Kubernetes:
+# use this template to set additional configuration properties for your cluster.
+spring:
+  datasource:
+    url: "jdbc:postgresql://mydb-postgresql.default.svc.cluster.local/mydb"

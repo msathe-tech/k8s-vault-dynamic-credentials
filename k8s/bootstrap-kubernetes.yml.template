@@ -1,0 +1,17 @@
+# Spring Boot configuration template when this app is deployed to Kubernetes:
+# use this template to set additional configuration properties for your cluster.
+spring:
+  cloud:
+    vault:
+      enabled: true
+      uri: http://vault.default.svc.cluster.local:8200
+      authentication: APPROLE
+      app-role:
+        role-id: insert-your-role-id-here
+        secret-id: insert-your-secret-id-here
+        role: k8s-vault-dynamic-credentials-role
+      generic:
+        enabled: false
+      database:
+        enabled: true
+        role: mydb-role
