@@ -19,6 +19,7 @@ package fr.alexandreroman.demos.vaultdyncreds;
 import com.github.javafaker.Faker;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -42,6 +43,7 @@ public class Application {
 
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 class IndexController {
     private final Faker faker = new Faker();
     private final SuperheroRepository repo;
@@ -61,6 +63,7 @@ class IndexController {
         hero.setName(randomHero.name());
         hero.setPower(randomHero.power());
         hero = repo.save(hero);
+        log.info("Created superhero: {}", hero);
         return hero;
     }
 }
