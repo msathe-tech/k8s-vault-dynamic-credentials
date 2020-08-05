@@ -4,6 +4,8 @@ kind: Service
 metadata:
   name: app-lb
   namespace: k8s-vault-dynamic-credentials
+  # annotations:
+  #   service.beta.kubernetes.io/aws-load-balancer-type: nlb
 spec:
   type: LoadBalancer
   ports:

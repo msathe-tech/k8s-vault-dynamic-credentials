@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: app
-          image: alexandreroman/k8s-vault-dynamic-credentials
+          image: msathepivotal/k8s-vault-dynamic-credentials
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
